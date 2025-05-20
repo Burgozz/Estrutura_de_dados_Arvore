@@ -14,12 +14,21 @@ public class arvore {
 
     public int contarNos() {
         return contarNosRecursivo(raiz);
-    }
-
-    private int contarNosRecursivo(No no) {
-        if (no == null) {
-            return 0;
+        // Método público para iniciar o percurso em pré-ordem
+        public void preOrdem() {
+            preOrdemRecursivo(raiz);
         }
-        return 1 + contarNosRecursivo(no.esquerda) + contarNosRecursivo(no.direita);
-    }
-}
+
+        private int contarNosRecursivo(No no) {
+            if (no == null) {
+                return 0;
+                // Método recursivo para percurso em pré-ordem
+                private void preOrdemRecursivo(No no) {
+                    if (no != null) {
+                        System.out.print(no.valor + " ");           // Visita o nó atual
+                        preOrdemRecursivo(no.esquerda);             // Percorre a subárvore esquerda
+                        preOrdemRecursivo(no.direita);              // Percorre a subárvore direita
+                    }
+                    return 1 + contarNosRecursivo(no.esquerda) + contarNosRecursivo(no.direita);
+                }
+            }
