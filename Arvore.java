@@ -31,9 +31,6 @@ public class Arvore {
             System.out.print(no.valor + " ");
             preOrdemRecursivo(no.esquerda);
             preOrdemRecursivo(no.direita);
-            System.out.print(no.valor + " ");
-            preOrdemRecursivo(no.esquerda);
-            preOrdemRecursivo(no.direita);
         }
     }
 
@@ -46,6 +43,19 @@ public class Arvore {
             emOrdemRecursivo(no.esquerda);
             System.out.print(no.valor + " ");
             emOrdemRecursivo(no.direita);
+        }
+    }
+
+
+    public void posOrdem() {
+        posOrdemRecursivo(raiz);
+    }
+
+    private void posOrdemRecursivo(No no) {
+        if (no != null) {
+            posOrdemRecursivo(no.esquerda);
+            posOrdemRecursivo(no.direita);
+            System.out.print(no.valor + " ");
         }
     }
 }
