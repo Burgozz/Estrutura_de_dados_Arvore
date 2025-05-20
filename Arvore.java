@@ -9,26 +9,43 @@ class No {
     }
 }
 
-public class arvore {
+public class Arvore {
     No raiz;
+
 
     public int contarNos() {
         return contarNosRecursivo(raiz);
-        // Método público para iniciar o percurso em pré-ordem
-        public void preOrdem() {
-            preOrdemRecursivo(raiz);
-        }
+    }
 
-        private int contarNosRecursivo(No no) {
-            if (no == null) {
-                return 0;
-                // Método recursivo para percurso em pré-ordem
-                private void preOrdemRecursivo(No no) {
-                    if (no != null) {
-                        System.out.print(no.valor + " ");           // Visita o nó atual
-                        preOrdemRecursivo(no.esquerda);             // Percorre a subárvore esquerda
-                        preOrdemRecursivo(no.direita);              // Percorre a subárvore direita
-                    }
-                    return 1 + contarNosRecursivo(no.esquerda) + contarNosRecursivo(no.direita);
-                }
-            }
+    private int contarNosRecursivo(No no) {
+        if (no == null) return 0;
+        return 1 + contarNosRecursivo(no.esquerda) + contarNosRecursivo(no.direita);
+    }
+
+    public void preOrdem() {
+        preOrdemRecursivo(raiz);
+    }
+
+    private void preOrdemRecursivo(No no) {
+        if (no != null) {
+            System.out.print(no.valor + " ");
+            preOrdemRecursivo(no.esquerda);
+            preOrdemRecursivo(no.direita);
+            System.out.print(no.valor + " ");
+            preOrdemRecursivo(no.esquerda);
+            preOrdemRecursivo(no.direita);
+        }
+    }
+
+    public void emOrdem() {
+        emOrdemRecursivo(raiz);
+    }
+
+    private void emOrdemRecursivo(No no) {
+        if (no != null) {
+            emOrdemRecursivo(no.esquerda);
+            System.out.print(no.valor + " ");
+            emOrdemRecursivo(no.direita);
+        }
+    }
+}
