@@ -13,20 +13,24 @@ class No {
 public class Arvore {
     No raiz;
 
-    public void emOrdemIterativo() {
-        Stack<No> pilha = new Stack<>();
-        No atual = raiz;
+    public void posOrdemIterativo() {
+        if (raiz == null) return;
 
-        while (atual != null || !pilha.isEmpty()) {
-            while (atual != null) {
-                pilha.push(atual);
-                atual = atual.esquerda;
-            }
+        Stack<No> pilha1 = new Stack<>();
+        Stack<No> pilha2 = new Stack<>();
 
-            atual = pilha.pop();
-            System.out.print(atual.valor + " ");
+        pilha1.push(raiz);
 
-            atual = atual.direita;
+        while (!pilha1.isEmpty()) {
+            No atual = pilha1.pop();
+            pilha2.push(atual);
+
+            if (atual.esquerda != null) pilha1.push(atual.esquerda);
+            if (atual.direita != null) pilha1.push(atual.direita);
+        }
+
+        while (!pilha2.isEmpty()) {
+            System.out.print(pilha2.pop().valor + " ");
         }
     }
 }
