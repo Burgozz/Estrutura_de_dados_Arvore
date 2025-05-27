@@ -11,21 +11,21 @@ class No {
     }
 }
 
-public class Arvore {
-    No raiz;
-
-    public void emNivelIterativo() {
-        if (raiz == null) return;
+    public int contarNosIterativo() {
+        if (raiz == null) return 0;
 
         Queue<No> fila = new LinkedList<>();
         fila.add(raiz);
+        int contador = 0;
 
         while (!fila.isEmpty()) {
             No atual = fila.poll();
-            System.out.print(atual.valor + " ");
+            contador++;
 
             if (atual.esquerda != null) fila.add(atual.esquerda);
             if (atual.direita != null) fila.add(atual.direita);
         }
+
+        return contador;
     }
 }
