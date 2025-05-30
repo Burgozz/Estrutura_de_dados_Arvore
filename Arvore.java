@@ -1,6 +1,3 @@
-import java.util.LinkedList;
-import java.util.Queue;
-
 class No {
     String valor;
     No esquerda, direita;
@@ -11,21 +8,20 @@ class No {
     }
 }
 
-    public int contarNosIterativo() {
-        if (raiz == null) return 0;
+public class Arvore {
+    No raiz;
 
-        Queue<No> fila = new LinkedList<>();
-        fila.add(raiz);
-        int contador = 0;
+    public int contarFolhasRecursivo(No no) {
+        if (no == null) return 0;
 
-        while (!fila.isEmpty()) {
-            No atual = fila.poll();
-            contador++;
-
-            if (atual.esquerda != null) fila.add(atual.esquerda);
-            if (atual.direita != null) fila.add(atual.direita);
+        if (no.esquerda == null && no.direita == null) {
+            return 1;
         }
 
-        return contador;
+        return contarFolhasRecursivo(no.esquerda) + contarFolhasRecursivo(no.direita);
+    }
+
+    public int contarFolhas() {
+        return contarFolhasRecursivo(raiz);
     }
 }
