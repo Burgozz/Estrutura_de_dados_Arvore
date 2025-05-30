@@ -1,3 +1,5 @@
+import java.util.Stack;
+
 class No {
     String valor;
     No esquerda, direita;
@@ -11,17 +13,24 @@ class No {
 public class Arvore {
     No raiz;
 
-    public int contarFolhasRecursivo(No no) {
-        if (no == null) return 0;
+    public int contarFolhasIterativoComPilha() {
+        if (raiz == null) return 0;
 
-        if (no.esquerda == null && no.direita == null) {
-            return 1;
+        Stack<No> pilha = new Stack<>();
+        pilha.push(raiz);
+        int contador = 0;
+
+        while (!pilha.isEmpty()) {
+            No atual = pilha.pop();
+
+            if (atual.esquerda == null && atual.direita == null) {
+                contador++;
+            }
+
+            if (atual.direita != null) pilha.push(atual.direita);
+            if (atual.esquerda != null) pilha.push(atual.esquerda);
         }
 
-        return contarFolhasRecursivo(no.esquerda) + contarFolhasRecursivo(no.direita);
-    }
-
-    public int contarFolhas() {
-        return contarFolhasRecursivo(raiz);
+        return contador;
     }
 }
