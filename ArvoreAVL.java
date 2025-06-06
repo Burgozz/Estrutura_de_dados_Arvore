@@ -1,6 +1,3 @@
-import java.util.LinkedList;
-import java.util.Queue;
-
 class No {
     String valor;
     No esquerda, direita;
@@ -11,24 +8,73 @@ class No {
     }
 }
 
-public class Arvore {
-    No raiz;
+public class ArvoreAVL {
+    private No raiz;
 
-    public int contarNosComFila() {
-        if (raiz == null) return 0;
+    // Inserção
+    public void inserir(String valor) {
+        raiz = inserir(raiz, valor);
+    }
 
-        Queue<No> fila = new LinkedList<>();
-        fila.add(raiz);
-        int contador = 0;
+    // Busca
+    public boolean buscar(String valor) {
+        return buscar(raiz, valor);
+    }
 
-        while (!fila.isEmpty()) {
-            No atual = fila.poll();
-            contador++;
+    // Remoção
+    public void remover(String valor) {
+        raiz = remover(raiz, valor);
+    }
 
-            if (atual.esquerda != null) fila.add(atual.esquerda);
-            if (atual.direita != null) fila.add(atual.direita);
+    // MÉTODOS INTERNOS
+
+    private No inserir(No no, String valor) {
+        if (no == null) return new No(valor);
+
+        if (valor.compareTo(no.valor) < 0) {
+            no.esquerda = inserir(no.esquerda, valor);
+        } else if (valor.compareTo(no.valor) > 0) {
+            no.direita = inserir(no.direita, valor);
+        }
+        return no;
+    }
+
+    private boolean buscar(No no, String valor) {
+        if (no == null) return false;
+        if (valor.equals(no.valor)) return true;
+
+        if (valor.compareTo(no.valor) < 0) {
+            return buscar(no.esquerda, valor);
+        } else {
+            return buscar(no.direita, valor);
+        }
+    }
+
+    private No remover(No no, String valor) {
+        if (no == null) return null;
+
+        if (valor.compareTo(no.valor) < 0) {
+            no.esquerda = remover(no.esquerda, valor);
+        } else if (valor.compareTo(no.valor) > 0) {
+            no.direita = remover(no.direita, valor);
+        } else {
+
+            if (no.esquerda == null) return no.direita;
+            if (no.direita == null) return no.esquerda;
+
+            No sucessor = menorValor(no.direita);
+            no.valor = sucessor.valor;
+            no.direita = remover(no.direita, sucessor.valor);
         }
 
-        return contador;
+        return no;
+    }
+
+    private No menorValor(No no) {
+        while (no.esquerda != null) {
+            no = no.esquerda;
+        }
+        return no;
     }
 }
+
