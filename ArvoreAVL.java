@@ -1,10 +1,12 @@
 class No {
     String valor;
     No esquerda, direita;
+    int altura;
 
     public No(String valor) {
         this.valor = valor;
         esquerda = direita = null;
+        altura = 1;
     }
 }
 
@@ -28,6 +30,10 @@ public class ArvoreAVL {
 
     // MÉTODOS INTERNOS
 
+    private int altura(No no) {
+        return (no == null) ? 0 : no.altura;
+    }
+
     private No inserir(No no, String valor) {
         if (no == null) return new No(valor);
 
@@ -35,7 +41,10 @@ public class ArvoreAVL {
             no.esquerda = inserir(no.esquerda, valor);
         } else if (valor.compareTo(no.valor) > 0) {
             no.direita = inserir(no.direita, valor);
+        } else {
+            return no;
         }
+        no.altura = 1 + Math.max(altura(no.esquerda), altura(no.direita));
         return no;
     }
 
@@ -58,7 +67,6 @@ public class ArvoreAVL {
         } else if (valor.compareTo(no.valor) > 0) {
             no.direita = remover(no.direita, valor);
         } else {
-
             if (no.esquerda == null) return no.direita;
             if (no.direita == null) return no.esquerda;
 
@@ -66,6 +74,9 @@ public class ArvoreAVL {
             no.valor = sucessor.valor;
             no.direita = remover(no.direita, sucessor.valor);
         }
+
+        no.altura = 1 + Math.max(altura(no.esquerda), altura(no.direita));
+
 
         return no;
     }
@@ -76,5 +87,37 @@ public class ArvoreAVL {
         }
         return no;
     }
-}
 
+
+    // Rotação à direita
+    private No rotacaoDireita(No noDesbalanceado) {
+        No novoNoRaiz = noDesbalanceado.esquerda;
+        No subarvoreRealocada = novoNoRaiz.direita;
+
+        // Faz a rotação
+        novoNoRaiz.direita = noDesbalanceado;
+        noDesbalanceado.esquerda = subarvoreRealocada;
+
+        // Atualiza alturas
+        noDesbalanceado.altura = 1 + Math.max(altura(noDesbalanceado.esquerda), altura(noDesbalanceado.direita));
+        novoNoRaiz.altura = 1 + Math.max(altura(novoNoRaiz.esquerda), altura(novoNoRaiz.direita));
+
+        return novoNoRaiz;
+    }
+
+    // Rotação à esquerda
+    private No rotacaoEsquerda(No noDesbalanceado) {
+        No novoNoRaiz = noDesbalanceado.direita;
+        No subarvoreRealocada = novoNoRaiz.esquerda;
+
+        // Faz a rotação
+        novoNoRaiz.esquerda = noDesbalanceado;
+        noDesbalanceado.direita = subarvoreRealocada;
+
+        // Atualiza alturas
+        noDesbalanceado.altura = 1 + Math.max(altura(noDesbalanceado.esquerda), altura(noDesbalanceado.direita));
+        novoNoRaiz.altura = 1 + Math.max(altura(novoNoRaiz.esquerda), altura(novoNoRaiz.direita));
+
+        return novoNoRaiz;
+    }
+}
