@@ -1,4 +1,4 @@
-public class NoRedBlack {
+class NoRedBlack {
     enum Color {
         RED,
         BLACK
@@ -14,3 +14,10 @@ public class NoRedBlack {
         esquerda = direita = pai = null;
     }
 }
+public class ArvoreRB{
+    private NoRedBlack raiz;
+
+    public boolean buscar(int chave)
+
+}
+
