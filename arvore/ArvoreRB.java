@@ -1,4 +1,4 @@
-class NoRedBlack {
+class NoRB {
     enum Color {
         RED,
         BLACK
@@ -137,8 +137,39 @@ public class ArvoreRB {
     }
 
     private void remover(NoRB z) {
+        NoRB y = z;
+        NoRB.Color corOriginal = y.cor;
+        NoRB x;
 
+        if (z.esquerda == null) {
+            x = z.direita;
+            transplantar(z, z.direita);
+        } else if (z.direita == null) {
+            x = z.esquerda;
+            transplantar(z, z.esquerda);
+        } else {
+            y = minimo(z.direita);
+            corOriginal = y.cor;
+            x = y.direita;
+            if (y.pai == z) {
+                if (x != null) x.pai = y;
+            } else {
+                transplantar(y, y.direita);
+                y.direita = z.direita;
+                if (y.direita != null) y.direita.pai = y;
+            }
+
+            transplantar(z, y);
+            y.esquerda = z.esquerda;
+            if (y.esquerda != null) y.esquerda.pai = y;
+            y.cor = z.cor;
+        }
+
+        if (corOriginal == NoRB.Color.BLACK) {
+            corrigirRemocao(x);
+        }
     }
+
 }
 
 
